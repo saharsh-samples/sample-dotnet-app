@@ -1,12 +1,14 @@
 using System;
 using System.ComponentModel.DataAnnotations;
 
-namespace sample_dotnet_app.Values {
+namespace sample_dotnet_app.Models {
 
     public class StoredValue {
         [Key]
-        public long id {get; set;}
-        public string value {get; set;}
+        public long Id {get; set;}
+        public string Value {get; set;}
+        public DateTime Created {get; set;}
+        public DateTime Updated {get; set;}
     }
 
 }
