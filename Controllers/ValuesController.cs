@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Threading;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using sample_dotnet_app.Services;
 
 namespace sample_dotnet_app.Controllers
 {
@@ -14,53 +15,54 @@ namespace sample_dotnet_app.Controllers
     public class ValuesController : ControllerBase
     {
 
-        private static long idCounter = 0;
-        private static Dictionary<long, string> values = new Dictionary<long, string>();
+        private readonly IValuesService valuesService;
+
+        public ValuesController(IValuesService valuesService) {
+            this.valuesService = valuesService;
+        }
 
         // GET api/values
         [HttpGet]
-        public ActionResult<Dictionary<long, string>> Get()
+        public ActionResult<object> Get()
         {
-            return values;
+            return valuesService.RetrieveAll();
         }
 
         // GET api/values/5
         [HttpGet("{id}")]
         public ActionResult<string> Get(long id)
         {
-            string value = "";
-            if(!values.TryGetValue(id, out value))
-            {
-                return NotFound("ID not found");
+            object value = null;
+            var success = valuesService.Retrieve(id, out value);
+            if(success) {
+                return Ok(value);
             }
-            return Ok(value);
+            return NotFound("ID '" + id + "' Not Found");
         }
 
         // POST api/values
         [HttpPost]
         public void Post([FromBody] string value)
         {
-            values.Add(Interlocked.Increment(ref idCounter), value);
+            valuesService.Store(value);
         }
 
         // PUT api/values/5
         [HttpPut("{id}")]
         public ActionResult<string> Put(long id, [FromBody] string value)
         {
-            string existing = "";
-            if(!values.TryGetValue(id, out existing))
-            {
-                return NotFound("ID not found");
+            var success = valuesService.Update(id, value);
+            if(success) {
+                return Ok();
             }
-            values[id] = value;
-            return Ok();
+            return NotFound("ID '" + id + "' Not Found");
         }
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
         public void Delete(long id)
         {
-            values.Remove(id);
+            valuesService.Delete(id);
         }
     }
 }
