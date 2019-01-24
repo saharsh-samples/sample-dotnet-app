@@ -10,7 +10,7 @@ This is a very basic ASP.NET 2.2 WebAPI project. It creates an example RESTful A
 - `PUT /api/values/{id}` (accepts a JSON string in request body)
 - `DELETE /api/values/{id}`
 
-The intention here is provide a repo that be forked to quickly get a simple ASP.NET 2.2 app running for whatever purpose.
+The intention here is provide a repo that can be forked to quickly get a simple ASP.NET 2.2 app running for whatever purpose.
 
 ## Build
 
