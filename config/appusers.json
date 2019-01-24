@@ -1,0 +1,13 @@
+{
+  "AppUsers" : [{
+    "Id": "saharsh",
+    "Password": "password",
+    "FirstName": "Saharsh",
+    "LastName": "Singh"
+  },{
+    "Id": "admin",
+    "Password": "admpass",
+    "FirstName": "System",
+    "LastName": "Administrator"
+  }]
+}
