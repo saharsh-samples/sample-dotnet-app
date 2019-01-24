@@ -1,17 +1,12 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net;
-using System.Net.Http;
-using System.Threading;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using sample_dotnet_app.Services;
+using sample_dotnet_app.Filters;
 
 namespace sample_dotnet_app.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
+    [ServiceFilter(typeof(BasicAuthenticationFilter))]
     public class ValuesController : ControllerBase
     {
 
@@ -60,9 +55,13 @@ namespace sample_dotnet_app.Controllers
 
         // DELETE api/values/5
         [HttpDelete("{id}")]
-        public void Delete(long id)
+        public ActionResult<string> Delete(long id)
         {
-            valuesService.Delete(id);
+            var success = valuesService.Delete(id);
+            if(success) {
+                return Ok();
+            }
+            return NotFound("ID '" + id + "' Not Found");
         }
     }
 }

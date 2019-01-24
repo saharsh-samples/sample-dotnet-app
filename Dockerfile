@@ -1,4 +1,4 @@
-FROM microsoft/dotnet:aspnetcore-runtime
+FROM microsoft/dotnet:2.2-aspnetcore-runtime
 WORKDIR /app
 COPY out .
 EXPOSE 80
